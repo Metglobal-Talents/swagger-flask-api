@@ -1,8 +1,6 @@
 from flask import request
 from models import Book, BookSchema
-
 books_schema = BookSchema(many=True)
-
 
 def search():
     if request.method == ['GET']:
