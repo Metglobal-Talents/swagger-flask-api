@@ -10,9 +10,9 @@ def create():
     pass
 
 
-def update(ISBN):
+def update():
     pass
 
 
-def delete(ISBN):
+def delete():
     pass

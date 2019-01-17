@@ -30,18 +30,13 @@ class Library:
         pass
 
 
-def reserve_book(ISBN):
+def reserve_book():
     pass
 
-
-def create_reservation(book, reservation_count):
+def borrow_book():
     pass
 
-
-def borrow_book(reservation_id):
-    pass
-
-def return_book(reservation_id):
+def return_book():
     pass
 
 
