@@ -1,29 +1,38 @@
 from flask import request, abort
 from models import Book, BookSchema, db
-
+from datetime import datetime
 
 books_schema = BookSchema(many=True)
 book_schema = BookSchema()
 
-def search():
-    if request.method == ['GET']:
-        book_name = request.args.get('book_name', '')
-        author_name = request.args.get('author_name', '')
-        genre = request.args.get('genre', '')
-        ISBN = request.args.get('ISBN', '')
-        publish_date = request.args.get('publish_date', '')
 
-        books = Book.query.filter(
-            (Book.book_name.ilike('%{}%'.format(book_name))) |
-            (Book.author_name.ilike('%{}%'.format(author_name))) |
-            (Book.genre.ilike('%{}%'.format(genre))) |
-            (Book.ISBN.ilike('%{}%'.format(ISBN))) |
-            (Book.publish_date.ilike('%{}%'.format(publish_date)))
-        )
-        books = books_schema.dump(books).data
-        return {books}, 200
-    else:
-        return 400
+def search():
+    book_name = request.args.get('book_name', '')
+    author_name = request.args.get('author_name', '')
+    genre = request.args.get('genre', '')
+    ISBN = request.args.get('ISBN', '')
+    publish_date = request.args.get('publish_date')
+
+    books = Book.query.filter(
+        (Book.book_name.ilike('%{}%'.format(book_name))) &
+        (Book.author_name.ilike('%{}%'.format(author_name))) &
+        (Book.genre.ilike('%{}%'.format(genre))) &
+        (Book.ISBN.ilike('%{}%'.format(ISBN)))
+    )
+
+    if publish_date:
+        try:
+            publish_date = datetime.strptime(publish_date, '%Y-%m-%d')
+        except TypeError:
+            abort(400, 'Bad request')
+
+        books = books.filter_by(publish_date=publish_date)
+
+    if len(books) <= 0:
+        abort(404, 'Book not found')
+
+    books = books_schema.dump(books).data
+    return books, 200
 
 
 def create():
