@@ -28,10 +28,11 @@ def search():
 
         books = books.filter_by(publish_date=publish_date)
 
-    if len(books) <= 0:
-        abort(404, 'Book not found')
+    
 
     books = books_schema.dump(books).data
+    if len(books) <= 0:
+        abort(404, 'Book not found')
     return books, 200
 
 
