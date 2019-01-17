@@ -4,7 +4,7 @@ Main module of the server file
 
 # 3rd party moudles
 import connexion
-from src.config import connex_app
+from config import connex_app
 
 # create the application instance
 
