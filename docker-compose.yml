@@ -4,4 +4,19 @@ services:
   web:
     build: ./src
     ports:
-      - "80:5000"
+      - "80:80"
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./src:/app
+
+  db:
+    image: postgres:11.0-alpine
+    environment:
+      POSTGRES_PASSWORD: 159tlg753zxc
+      POSTGRES_USER: talents
+      POSTGRES_DB: librarydb
+    restart: always
