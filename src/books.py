@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, abort
 from models import Book, BookSchema, db
 
 
@@ -30,15 +30,15 @@ def create():
     if request.method == 'POST':
         json_data = request.get_json(force=True)
         if not json_data:
-            return {"message": "No Data Provided"}, 400
+            abort(400, "Bad Request for Create")
 
         data, errors = book_schema.load(json_data)
         if errors:
-            return errors, 422
+            abort(400, errors)
         check = Book.query.filter_by(ISBN=data.ISBN).first()
 
         if check:
-            return {"status": "conflict", "message": "Book already exist"}, 409
+            abort(400, "Book already exists")
 
         new_book = Book(
             book_name=data.book_name,
@@ -52,7 +52,7 @@ def create():
         db.session.add(new_book)
         db.session.commit()
         result = book_schema.dump(new_book).data
-        return {"status": "Success", "data": result}, 201
+        return result, 201
 
 
 def update():
