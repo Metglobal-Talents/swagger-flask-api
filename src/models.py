@@ -13,7 +13,7 @@ class Book(db.Model):
     genre = db.Column(db.String(50), nullable=False)
     ISBN = db.Column(db.String(13), unique=True, nullable=False)
     count = db.Column(db.Integer)
-    reservation_count = db.Column(db.Integer)
+    reservation_count = db.Column(db.Integer, default=0)
     publish_date = db.Column(db.Date)
 
 
