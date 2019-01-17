@@ -65,7 +65,30 @@ def create():
 
 
 def update():
-    pass
+    request_book = request.get_json(force=True)
+    if not request_book:
+        abort(400, "No Input Data")
+
+    data, errors = book_schema.load(request_book)
+    if errors:
+        abort(400, "Bad Request")
+
+    book = Book.query.filter_by(ISBN=request_book['ISBN']).first()
+    if not book:
+        abort(404, 'Book Not Found')
+
+    book.ISBN = request_book.get('ISBN')
+    book.book_name = request_book.get('book_name', book.book_name)
+    book.author_name = request_book.get('author_name', book.author_name)
+    book.genre = request_book.get('genre', book.genre)
+    book.publish_date = request_book.get('publish_date', book.publish_date)
+    book.count = request_book.get('count', book.count)
+    book.reservation_count = request_book.get('reservation_count',
+                                              book.reservation_count)
+    db.session.commit()
+
+    result = book_schema.dump(book).data
+    return result, 200
 
 
 def delete():
