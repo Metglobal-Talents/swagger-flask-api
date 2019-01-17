@@ -1,439 +1,485 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "This is the swagger file that goes with our server code",
-    "version": "1.0.0",
-    "title": "Metglobal-CTKT Simple Library API"
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the swagger file that goes with our server code",
+    "version" : "1.0.0",
+    "title" : "Metglobal-Talents Simple Library API"
   },
-  "host": "localhost",
-  "basePath": "/api",
-  "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
-  "paths": {
-    "/books": {
-      "get": {
-        "tags": ["books"],
-        "summary": "Filter books with given filter",
-        "description": "Book list with filter",
-        "operationId": "books.search",
-        "parameters": [{
-          "name": "book_name",
-          "in": "query",
-          "description": "Name of the book",
+  "host" : "localhost",
+  "basePath" : "/api",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/books" : {
+      "get" : {
+        "tags" : [ "books" ],
+        "summary" : "Filter books with given filter",
+        "description" : "Book list with filter",
+        "operationId" : "books.search",
+        "parameters" : [ {
+          "name" : "book_name",
+          "in" : "query",
+          "description" : "Name of the book",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "author_name",
+          "in" : "query",
+          "description" : "Name of the author",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "genre",
+          "in" : "query",
+          "description" : "Genre of the book",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "ISBN",
+          "in" : "query",
+          "description" : "ISBN of the book",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "publish_date",
+          "in" : "query",
+          "description": "Publish date of the book",
           "required": false,
           "type": "string"
-        }, {
-          "name": "author_name",
-          "in": "query",
-          "description": "Name of the author",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "genre",
-          "in": "query",
-          "description": "Genre of the book",
-          "required": false,
-          "type": "string"
-        }, {
-          "name": "ISBN",
-          "in": "query",
-          "description": "Number of books",
-          "required": false,
-          "type": "integer"
-        }],
-        "responses": {
-          "200": {
-            "description": "Books Listed Successfully",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "ISBN": {
-                    "type": "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Books Listed Successfully",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "ISBN" : {
+                    "type" : "string"
                   },
-                  "book_name": {
-                    "type": "string"
+                  "book_name" : {
+                    "type" : "string"
                   },
-                  "author_name": {
-                    "type": "string"
+                  "author_name" : {
+                    "type" : "string"
                   },
-                  "genre": {
-                    "type": "string"
+                  "genre" : {
+                    "type" : "string"
                   },
-                  "count": {
-                    "type": "integer"
+                  "count" : {
+                    "type" : "integer"
                   },
-                  "reservation_count": {
-                    "type": "integer"
+                  "reservation_count" : {
+                    "type" : "integer"
                   },
-                  "publish_date": {
-                    "type": "string"
+                  "publish_date" : {
+                    "type" : "string"
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request for Book Search"
+          "400" : {
+            "description" : "Bad Request for Book Search"
           }
         }
-      }
-    },
-    "/books/create": {
-      "post": {
-        "tags": ["books"],
-        "summary": "Create new book",
-        "description": "New book is created.",
-        "operationId": "books.create",
-        "parameters": [{
-          "in": "body",
-          "name": "book",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/book"
+      },
+      "post" : {
+        "tags" : [ "books" ],
+        "summary" : "Create new book",
+        "description" : "New book is created.",
+        "operationId" : "books.create",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "book",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/book_1"
           }
-        }],
-        "responses": {
-          "201": {
-            "description": "Book Created Successfully",
-            "schema": {
-              "properties": {
-                "ISBN": {
-                  "type": "string"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Book Created Successfully",
+            "schema" : {
+              "properties" : {
+                "ISBN" : {
+                  "type" : "string"
                 },
-                "book_name": {
-                  "type": "string"
+                "book_name" : {
+                  "type" : "string"
                 },
-                "author_name": {
-                  "type": "string"
+                "author_name" : {
+                  "type" : "string"
                 },
-                "genre": {
-                  "type": "string"
+                "genre" : {
+                  "type" : "string"
                 },
-                "count": {
-                  "type": "integer"
+                "count" : {
+                  "type" : "integer"
                 },
-                "publish_date": {
-                  "type": "string"
+                "reservation_count" : {
+                  "type" : "integer"
+                },
+                "publish_date" : {
+                  "type" : "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request for Book Create"
+          "400" : {
+            "description" : "Bad Request for Book Create"
           }
         }
-      }
-    },
-    "/books/update/{ISBN}": {
-      "put": {
-        "tags": ["books"],
-        "summary": "Update a book given ISBN",
-        "description": "Update a book with given ISBN",
-        "operationId": "books.update",
-        "parameters": [{
-          "name": "ISBN",
-          "in": "path",
-          "description": "ISBN of the book",
-          "required": true,
-          "type": "string"
-        }, {
-          "in": "body",
-          "name": "book",
-          "required": false,
-          "schema": {
-            "$ref": "#/definitions/book_1"
+      },
+      "put" : {
+        "tags" : [ "books" ],
+        "summary" : "Update a book given ISBN",
+        "description" : "Update a book with given ISBN",
+        "operationId" : "books.update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "book",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/book"
           }
-        }],
-        "responses": {
-          "200": {
-            "description": "Book Updated Successfully",
-            "schema": {
-              "properties": {
-                "ISBN": {
-                  "type": "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Book Updated Successfully",
+            "schema" : {
+              "properties" : {
+                "ISBN" : {
+                  "type" : "string"
                 },
-                "book_name": {
-                  "type": "string"
+                "book_name" : {
+                  "type" : "string"
                 },
-                "author_name": {
-                  "type": "string"
+                "author_name" : {
+                  "type" : "string"
                 },
-                "genre": {
-                  "type": "string"
+                "genre" : {
+                  "type" : "string"
                 },
-                "count": {
-                  "type": "integer"
+                "count" : {
+                  "type" : "integer"
                 },
-                "publish_date": {
-                  "type": "string"
+                "reservation_count" : {
+                  "type" : "integer"
+                },
+                "publish_date" : {
+                  "type" : "string"
                 }
               }
             }
           },
-          "404": {
-            "description": "Book Not Found"
+          "404" : {
+            "description" : "Book Not Found"
           }
         }
-      }
-    },
-    "/books/delete/{ISBN}": {
-      "delete": {
-        "tags": ["books"],
-        "summary": "Delete a book with given ISBN",
-        "description": "Delete a book given ISBN",
-        "operationId": "books.delete",
-        "parameters": [{
-          "name": "ISBN",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "Book Removed Successfully",
-            "schema": {
-              "properties": {
-                "ISBN": {
-                  "type": "string"
+      },
+      "delete" : {
+        "tags" : [ "books" ],
+        "summary" : "Delete a book with given ISBN",
+        "description" : "Delete a book given ISBN",
+        "operationId" : "books.delete",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "ISBN",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ISBN"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Book Removed Successfully",
+            "schema" : {
+              "properties" : {
+                "ISBN" : {
+                  "type" : "string"
                 },
-                "book_name": {
-                  "type": "string"
+                "book_name" : {
+                  "type" : "string"
                 },
-                "author_name": {
-                  "type": "string"
+                "author_name" : {
+                  "type" : "string"
                 },
-                "genre": {
-                  "type": "string"
+                "genre" : {
+                  "type" : "string"
                 },
-                "count": {
-                  "type": "integer"
+                "count" : {
+                  "type" : "integer"
                 },
-                "publish_date": {
-                  "type": "string"
+                "reservation_count" : {
+                  "type" : "integer"
+                },
+                "publish_date" : {
+                  "type" : "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request for Book Remove"
+          "400" : {
+            "description" : "Bad Request for Book Remove"
           },
-          "404": {
-            "description": "Book Not Found"
+          "404" : {
+            "description" : "Book Not Found"
           }
         }
       }
     },
-    "/library/reserve/{ISBN}": {
-      "post": {
-        "tags": ["library"],
-        "summary": "Creates a reservation for given book ISBN",
-        "description": "Reservation for given book ISBN",
-        "operationId": "library.reserve",
-        "parameters": [{
-          "name": "ISBN",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }, {
-          "in": "body",
-          "name": "count",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/count"
+    "/library/reserve/" : {
+      "post" : {
+        "tags" : [ "library" ],
+        "summary" : "Creates a reservation for given book ISBN",
+        "description" : "Reservation for given book ISBN",
+        "operationId" : "library.reserve_book",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "count",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/count"
           }
-        }],
-        "responses": {
-          "200": {
-            "description": "Reservation Created Successfully",
-            "schema": {
-              "properties": {
-                "reservation_id": {
-                  "type": "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Reservation Created Successfully",
+            "schema" : {
+              "properties" : {
+                "reservation_id" : {
+                  "type" : "string"
                 },
-                "book_ISBN": {
-                  "type": "string"
+                "book_ISBN" : {
+                  "type" : "string"
                 },
-                "reservation_count": {
-                  "type": "integer"
+                "reservation_count" : {
+                  "type" : "integer"
                 },
-                "is_borrowed": {
-                  "type": "boolean"
+                "is_borrowed" : {
+                  "type" : "boolean"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request for Reservation"
+          "400" : {
+            "description" : "Bad Request for Reservation"
           },
-          "404": {
-            "description": "Book ISBN Not Found"
+          "404" : {
+            "description" : "Book ISBN Not Found"
           }
         }
       }
     },
-    "/library/borrow/{reservation_id}": {
-      "put": {
-        "tags": ["library"],
-        "summary": "Books borrowed, reservation count decreased, and count decreased",
-        "description": "Books borrowed, reservation count decreased, and count decreased",
-        "operationId": "library.borrow",
-        "parameters": [{
-          "name": "reservation_id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "Book Borrowed Successfully",
-            "schema": {
-              "properties": {
-                "book_name": {
-                  "type": "string"
+    "/library/borrow/" : {
+      "put" : {
+        "tags" : [ "library" ],
+        "summary" : "Books borrowed, reservation count decreased, and count decreased",
+        "description" : "Books borrowed, reservation count decreased, and count decreased",
+        "operationId" : "library.borrow_book",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "reservation",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/reservation"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Book Borrowed Successfully",
+            "schema" : {
+              "properties" : {
+                "book_name" : {
+                  "type" : "string"
                 },
-                "author_name": {
-                  "type": "string"
+                "author_name" : {
+                  "type" : "string"
                 },
-                "genre": {
-                  "type": "string"
+                "genre" : {
+                  "type" : "string"
                 },
-                "count": {
-                  "type": "integer"
+                "count" : {
+                  "type" : "integer"
                 },
-                "publish_date": {
-                  "type": "string"
+                "reservation_count" : {
+                  "type" : "integer"
+                },
+                "publish_date" : {
+                  "type" : "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request for Book Borrow"
+          "400" : {
+            "description" : "Bad Request for Book Borrow"
           },
-          "404": {
-            "description": "Reservation Not Found"
+          "404" : {
+            "description" : "Reservation Not Found"
           }
         }
       }
     },
-    "/library/return/{reservation_id}": {
-      "put": {
-        "tags": ["library"],
-        "summary": "Book returned from borrow or reservation",
-        "description": "Book count increased for return",
-        "operationId": "library.return",
-        "parameters": [{
-          "name": "reservation_id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }],
-        "responses": {
-          "200": {
-            "description": "Book Returned Successfully",
-            "schema": {
-              "properties": {
-                "book_name": {
-                  "type": "string"
+    "/library/return/" : {
+      "put" : {
+        "tags" : [ "library" ],
+        "summary" : "Book returned from borrow or reservation",
+        "description" : "Book count increased for return",
+        "operationId" : "library.return_book",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "reservation_id",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/reservation_id"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Book Returned Successfully",
+            "schema" : {
+              "properties" : {
+                "book_name" : {
+                  "type" : "string"
                 },
-                "author_name": {
-                  "type": "string"
+                "author_name" : {
+                  "type" : "string"
                 },
-                "genre": {
-                  "type": "string"
+                "genre" : {
+                  "type" : "string"
                 },
-                "count": {
-                  "type": "integer"
+                "count" : {
+                  "type" : "integer"
                 },
-                "publish_date": {
-                  "type": "string"
+                "reservation_count" : {
+                  "type" : "integer"
+                },
+                "publish_date" : {
+                  "type" : "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request for Book Return"
+          "400" : {
+            "description" : "Bad Request for Book Return"
           },
-          "404": {
-            "description": "Reservation Not Found"
+          "404" : {
+            "description" : "Reservation Not Found"
           }
         }
       }
     }
   },
-  "definitions": {
-    "book_1": {
-      "type": "object",
-      "properties": {
-        "book_name": {
-          "type": "string"
+  "definitions" : {
+    "book_1" : {
+      "type" : "object",
+      "properties" : {
+        "book_name" : {
+          "type" : "string"
         },
-        "author_name": {
-          "type": "string"
+        "author_name" : {
+          "type" : "string"
         },
-        "genre": {
-          "type": "string"
+        "genre" : {
+          "type" : "string"
         },
-        "count": {
-          "type": "integer"
+        "count" : {
+          "type" : "integer"
         },
-        "publish_date": {
-          "type": "string"
+        "reservation_count" : {
+          "type" : "integer"
+        },
+        "publish_date" : {
+          "type" : "string"
         }
       }
     },
-    "book": {
-      "type": "object",
-      "properties": {
-        "book_name": {
-          "type": "string"
-        },
-        "author_name": {
-          "type": "string"
-        },
-        "genre": {
-          "type": "string"
-        },
-        "count": {
-          "type": "integer"
-        },
-        "publish_date": {
-          "type": "string"
+    "reservation_id" : {
+      "type" : "object",
+      "properties" : {
+        "reservation_id" : {
+          "type" : "string"
         }
       }
     },
-    "count": {
-      "type": "object",
-      "properties": {
-        "reservation_count": {
-          "type": "integer"
+    "ISBN" : {
+      "type" : "object",
+      "properties" : {
+        "ISBN" : {
+          "type" : "string"
         }
       }
     },
-    "inline_response_200": {
-      "properties": {
-        "ISBN": {
-          "type": "string"
+    "book" : {
+      "type" : "object",
+      "properties" : {
+        "ISBN" : {
+          "type" : "string"
         },
-        "book_name": {
-          "type": "string"
+        "book_name" : {
+          "type" : "string"
         },
-        "author_name": {
-          "type": "string"
+        "author_name" : {
+          "type" : "string"
         },
-        "genre": {
-          "type": "string"
+        "genre" : {
+          "type" : "string"
         },
-        "count": {
-          "type": "integer"
+        "count" : {
+          "type" : "integer"
         },
-        "reservation_count": {
-          "type": "integer"
+        "reservation_count" : {
+          "type" : "integer"
         },
-        "publish_date": {
-          "type": "string"
+        "publish_date" : {
+          "type" : "string"
+        }
+      }
+    },
+    "count" : {
+      "type" : "object",
+      "properties" : {
+        "ISBN" : {
+          "type" : "string"
+        },
+        "reservation_count" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "ISBN" : {
+          "type" : "string"
+        },
+        "book_name" : {
+          "type" : "string"
+        },
+        "author_name" : {
+          "type" : "string"
+        },
+        "genre" : {
+          "type" : "string"
+        },
+        "count" : {
+          "type" : "integer"
+        },
+        "reservation_count" : {
+          "type" : "integer"
+        },
+        "publish_date" : {
+          "type" : "string"
+        }
+      }
+    },
+    "reservation" : {
+      "type" : "object",
+      "properties" : {
+        "reservation_id" : {
+          "type" : "string"
         }
       }
     }

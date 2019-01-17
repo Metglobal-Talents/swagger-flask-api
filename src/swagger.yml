@@ -1,8 +1,9 @@
+---
 swagger: "2.0"
 info:
   description: This is the swagger file that goes with our server code
   version: 1.0.0
-  title: Metglobal-CTKT Simple Library API
+  title: Metglobal-Talents Simple Library API
 host: localhost
 basePath: /api
 schemes:
@@ -37,9 +38,14 @@ paths:
         type: string
       - name: ISBN
         in: query
-        description: Number of books
+        description: ISBN of the book
         required: false
-        type: integer
+        type: string
+      - name: publish_date
+        in: query
+        description: Publish date of the book
+        required: false
+        type: string
       responses:
         200:
           description: Books Listed Successfully
@@ -64,7 +70,6 @@ paths:
                   type: string
         400:
           description: Bad Request for Book Search
-  /books/create:
     post:
       tags:
       - books
@@ -76,7 +81,7 @@ paths:
         name: book
         required: true
         schema:
-          $ref: '#/definitions/book'
+          $ref: '#/definitions/book_1'
       responses:
         201:
           description: Book Created Successfully
@@ -92,11 +97,12 @@ paths:
                 type: string
               count:
                 type: integer
+              reservation_count:
+                type: integer
               publish_date:
                 type: string
         400:
           description: Bad Request for Book Create
-  /books/update/{ISBN}:
     put:
       tags:
       - books
@@ -104,16 +110,11 @@ paths:
       description: Update a book with given ISBN
       operationId: books.update
       parameters:
-      - name: ISBN
-        in: path
-        description: ISBN of the book
-        required: true
-        type: string
       - in: body
         name: book
         required: false
         schema:
-          $ref: '#/definitions/book_1'
+          $ref: '#/definitions/book'
       responses:
         200:
           description: Book Updated Successfully
@@ -129,11 +130,12 @@ paths:
                 type: string
               count:
                 type: integer
+              reservation_count:
+                type: integer
               publish_date:
                 type: string
         404:
           description: Book Not Found
-  /books/delete/{ISBN}:
     delete:
       tags:
       - books
@@ -141,10 +143,11 @@ paths:
       description: Delete a book given ISBN
       operationId: books.delete
       parameters:
-      - name: ISBN
-        in: path
-        required: true
-        type: string
+      - in: body
+        name: ISBN
+        required: false
+        schema:
+          $ref: '#/definitions/ISBN'
       responses:
         200:
           description: Book Removed Successfully
@@ -160,13 +163,15 @@ paths:
                 type: string
               count:
                 type: integer
+              reservation_count:
+                type: integer
               publish_date:
                 type: string
         400:
           description: Bad Request for Book Remove
         404:
           description: Book Not Found
-  /library/reserve/{ISBN}:
+  /library/reserve/:
     post:
       tags:
       - library
@@ -174,10 +179,6 @@ paths:
       description: Reservation for given book ISBN
       operationId: library.reserve_book
       parameters:
-      - name: ISBN
-        in: path
-        required: true
-        type: string
       - in: body
         name: count
         required: true
@@ -200,7 +201,7 @@ paths:
           description: Bad Request for Reservation
         404:
           description: Book ISBN Not Found
-  /library/borrow/{reservation_id}:
+  /library/borrow/:
     put:
       tags:
       - library
@@ -208,10 +209,11 @@ paths:
       description: Books borrowed, reservation count decreased, and count decreased
       operationId: library.borrow_book
       parameters:
-      - name: reservation_id
-        in: path
-        required: true
-        type: string
+      - in: body
+        name: reservation
+        required: false
+        schema:
+          $ref: '#/definitions/reservation'
       responses:
         200:
           description: Book Borrowed Successfully
@@ -225,13 +227,15 @@ paths:
                 type: string
               count:
                 type: integer
+              reservation_count:
+                type: integer
               publish_date:
                 type: string
         400:
           description: Bad Request for Book Borrow
         404:
           description: Reservation Not Found
-  /library/return/{reservation_id}:
+  /library/return/:
     put:
       tags:
       - library
@@ -239,10 +243,11 @@ paths:
       description: Book count increased for return
       operationId: library.return_book
       parameters:
-      - name: reservation_id
-        in: path
-        required: true
-        type: string
+      - in: body
+        name: reservation_id
+        required: false
+        schema:
+          $ref: '#/definitions/reservation_id'
       responses:
         200:
           description: Book Returned Successfully
@@ -255,6 +260,8 @@ paths:
               genre:
                 type: string
               count:
+                type: integer
+              reservation_count:
                 type: integer
               publish_date:
                 type: string
@@ -274,11 +281,25 @@ definitions:
         type: string
       count:
         type: integer
+      reservation_count:
+        type: integer
       publish_date:
+        type: string
+  reservation_id:
+    type: object
+    properties:
+      reservation_id:
+        type: string
+  ISBN:
+    type: object
+    properties:
+      ISBN:
         type: string
   book:
     type: object
     properties:
+      ISBN:
+        type: string
       book_name:
         type: string
       author_name:
@@ -287,11 +308,15 @@ definitions:
         type: string
       count:
         type: integer
+      reservation_count:
+        type: integer
       publish_date:
         type: string
   count:
     type: object
     properties:
+      ISBN:
+        type: string
       reservation_count:
         type: integer
   inline_response_200:
@@ -309,4 +334,9 @@ definitions:
       reservation_count:
         type: integer
       publish_date:
+        type: string
+  reservation:
+    type: object
+    properties:
+      reservation_id:
         type: string
