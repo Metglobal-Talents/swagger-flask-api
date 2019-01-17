@@ -1,7 +1,9 @@
 from flask import request
 from models import Book, BookSchema, db
 
+
 books_schema = BookSchema(many=True)
+book_schema = BookSchema()
 
 def search():
     if request.method == ['GET']:
@@ -25,35 +27,32 @@ def search():
 
 
 def create():
-    try:
-        book_name = request.args['book_name']
-        author_name = request.args['author_name']
-        genre = request.args['genre']
-        ISBN = request.args['ISBN']
-        publish_date = request.args['publish_date']
-        count = request.args['count']
-        reservation_count = request.args['reservation_count']
-    except KeyError:
-        return {"status": "Bad Request", "message": "No input provided"}, 400
+    if request.method == 'POST':
+        json_data = request.get_json(force=True)
+        if not json_data:
+            return {"message": "No Data Provided"}, 400
 
-    book = Book.query.get(ISBN)
+        data, errors = book_schema.load(json_data)
+        if errors:
+            return errors, 422
+        check = Book.query.filter_by(ISBN=data.ISBN).first()
 
-    if book:
-        return {"status": "conflict", "message": "Book already exist"}, 409
+        if check:
+            return {"status": "conflict", "message": "Book already exist"}, 409
 
-    book = Book(
-        book_name=book_name,
-        author_name=author_name,
-        genre=genre,
-        ISBN=ISBN,
-        publish_date=publish_date,
-        count=count,
-        reservation_count=reservation_count
-    )
-    db.session.add(book)
-    db.session.commit(book)
-    result = books_schema.load(book).data
-    return {"status": "Success", "data": result}, 201
+        new_book = Book(
+            book_name=data.book_name,
+            author_name=data.author_name,
+            genre=data.genre,
+            ISBN=data.ISBN,
+            count=data.count,
+            publish_date=data.publish_date
+        )
+
+        db.session.add(new_book)
+        db.session.commit()
+        result = book_schema.dump(new_book).data
+        return {"status": "Success", "data": result}, 201
 
 
 def update():
