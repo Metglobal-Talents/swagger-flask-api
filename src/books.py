@@ -37,32 +37,32 @@ def search():
 
 
 def create():
-    if request.method == 'POST':
-        json_data = request.get_json(force=True)
-        if not json_data:
-            abort(400, "Bad Request for Create")
 
-        data, errors = book_schema.load(json_data)
-        if errors:
-            abort(400, errors)
-        check = Book.query.filter_by(ISBN=data.ISBN).first()
+    json_data = request.get_json(force=True)
+    if not json_data:
+        abort(400, "Bad Request for Create")
 
-        if check:
-            abort(400, "Book already exists")
+    data, errors = book_schema.load(json_data)
+    if errors:
+        abort(400, errors)
+    check = Book.query.filter_by(ISBN=data.ISBN).first()
 
-        new_book = Book(
-            book_name=data.book_name,
-            author_name=data.author_name,
-            genre=data.genre,
-            ISBN=data.ISBN,
-            count=data.count,
-            publish_date=data.publish_date
-        )
+    if check:
+        abort(400, "Book already exists")
 
-        db.session.add(new_book)
-        db.session.commit()
-        result = book_schema.dump(new_book).data
-        return result, 201
+    new_book = Book(
+        book_name=data.book_name,
+        author_name=data.author_name,
+        genre=data.genre,
+        ISBN=data.ISBN,
+        count=data.count,
+        publish_date=data.publish_date
+    )
+
+    db.session.add(new_book)
+    db.session.commit()
+    result = book_schema.dump(new_book).data
+    return result, 201
 
 
 def update():
