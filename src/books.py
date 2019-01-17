@@ -45,10 +45,13 @@ def create():
     data, errors = book_schema.load(json_data)
     if errors:
         abort(400, errors)
-    check = Book.query.filter_by(ISBN=data.ISBN).first()
+    book = Book.query.filter_by(ISBN=data.ISBN).first()
 
-    if check:
+    if book:
         abort(400, "Book already exists")
+
+    if json_data.get("count") <= 0:
+        abort(400, "Bad Request for Book Create")
 
     new_book = Book(
         book_name=data.book_name,
