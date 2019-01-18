@@ -1,6 +1,7 @@
 import unittest
 import json
 from server import connex_app
+import uuid
 
 
 class BookTestCase(unittest.TestCase):
@@ -146,6 +147,39 @@ class BookTestCase(unittest.TestCase):
         rv = self.app.put("/api/books",
                           data=json.dumps(data),
                           headers={"Content-Type": "application/json"})
+        status_code = rv.status_code
+        assert status_code == 400
+
+    def test_create_already_exists(self):
+        rv = self.app.get("/api/books")
+        book = rv.json[0]
+        data = {
+            "book_name" : book.get("book_name"),
+            "author_name" : book.get("author_name"),
+            "genre" : book.get("genre"),
+            "ISBN" : book.get("ISBN"),
+            "count" : book.get("count"),
+            "reservation_count" : book.get("reservation_count")
+        }
+        rv = self.app.post("/api/books", data=json.dumps(data),
+                           headers={"Content-Type": "application/json"})
+        status_code = rv.status_code
+        assert status_code == 400
+
+    def test_create_success(self):
+        data = {"ISBN": str(uuid.uuid4())[10], "book_name": "It", "author_name": "Stephen King",
+                "genre": "Horror", "count": 100, "publish_date": "1986"}
+        rv = self.app.post("/api/books", data=json.dumps(data),
+                           headers={"Content-Type": "application/json"})
+        status_code = rv.status_code
+        assert status_code == 201
+
+    def test_create_unsuccess(self):
+        data = {"ISBN": "1313", "book_name": "It",
+                "author_name": "Stephen King",
+                "genre": "Horror", "count": 100, "publish_date": "1986-01-01"}
+        rv = self.app.post("/api/books", data=json.dumps(data),
+                           headers={"Content-Type": "application/json"})
         status_code = rv.status_code
         assert status_code == 400
 
