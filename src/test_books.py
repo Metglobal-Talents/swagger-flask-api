@@ -183,7 +183,7 @@ class BookTestCase(unittest.TestCase):
         assert status_code == 201
 
     def test_create_unsuccess(self):
-        data = {"ISBN": "1313", "book_name": "It",
+        data = {"ISBN": 1313, "book_name": "It",
                 "author_name": "Stephen King",
                 "genre": "Horror", "count": 100, "publish_date": "1986-01-01"}
         rv = self.app.post("/api/books", data=json.dumps(data),
@@ -216,6 +216,43 @@ class BookTestCase(unittest.TestCase):
         status_code = rv.status_code
         assert status_code == 404
 
+    def test_return_books_bad_request(self):
+        data = {"reservation_id": 10}
+        rv = self.app.put("/api/library/return",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json"
+                })
+        status_code = rv.status_code
+        assert status_code == 400
 
+    def test_return_books_not_found(self):
+        data = {"reservation_id": "asdasdasd"}
+        rv = self.app.put("/api/library/return",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json"
+                })
+        status_code = rv.status_code
+        assert status_code == 404
+
+    def test_return_books_success(self):
+        data = {"ISBN": "9788700760356", "reservation_count": 1}
+        rv = self.app.post("/api/library/reserve",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json"
+                })
+        reservation_id = rv.json.get("reservation_id")
+        data = {"reservation_id": reservation_id}
+        rv = self.app.put("/api/library/return",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json"
+                })
+        status_code = rv.status_code
+        assert status_code == 200
+
+        
 if __name__ == '__main__':
     unittest.main()
