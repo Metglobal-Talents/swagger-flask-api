@@ -35,7 +35,6 @@ def search():
 
 
 def create():
-
     json_data = request.get_json(force=True)
     if not json_data:
         abort(400, "Bad Request for Create")
@@ -79,14 +78,16 @@ def update():
     if not book:
         abort(404, 'Book Not Found')
 
-    book.ISBN = request_book.get('ISBN')
-    book.book_name = request_book.get('book_name', book.book_name)
-    book.author_name = request_book.get('author_name', book.author_name)
-    book.genre = request_book.get('genre', book.genre)
-    book.publish_date = request_book.get('publish_date', book.publish_date)
-    book.count = request_book.get('count', book.count)
-    book.reservation_count = request_book.get('reservation_count',
-                                              book.reservation_count)
+    book.ISBN = data.ISBN
+    book.book_name = data.book_name if data.book_name != None else book.book_name
+    book.author_name = data.author_name \
+        if data.author_name != None else book.author_name
+    book.genre = data.genre if data.genre != None else book.genre
+    book.publish_date = data.publish_date \
+        if data.publish_date != None else book.publish_date
+    book.count = data.count if data.count != None else book.count
+    book.reservation_count = data.reservation_count \
+        if data.reservation_count != None else book.reservation_count
     db.session.commit()
 
     result = book_schema.dump(book).data
