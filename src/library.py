@@ -44,6 +44,9 @@ def borrow_book():
 
     reservation = Reservation.query.filter_by(\
                     reservation_id=json_data.get('reservation_id')).first()
+    if not reservation:
+        abort(404, 'Reservation not found')
+
     book_isbn = reservation.book_ISBN
     book = Book.query.filter_by(ISBN=book_isbn).first()
 
@@ -55,7 +58,7 @@ def borrow_book():
         result = book_schema.dump(book).data
         return result, 200
     else:
-        abort(404, 'Reservation not found')
+        abort(400, 'Bad request')
 
 
 def return_book():
