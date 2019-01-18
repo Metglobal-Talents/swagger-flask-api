@@ -51,6 +51,23 @@ class BookTestCase(unittest.TestCase):
         status_code = rv.status_code
         assert status_code == 200
 
+    def test_delete_success(self):
+        data = {"ISBN": "9781408835005"}
+        rv = self.app.delete("/api/books",
+                             data=json.dumps(data),
+                             headers={"Content-Type": "application/json",
+                                      "Accept": "application/json"})
+        status_code = rv.status_code
+        assert status_code == 200
+
+    def test_delete_unsuccess(self):
+        data = {"ISBN": "9781408835"}
+        rv = self.app.delete("/api/books",
+                             data=json.dumps(data),
+                             headers={"Content-Type": "application/json",
+                                      "Accept": "application/json"})
+        status_code = rv.status_code
+        assert status_code == 404
 
 if __name__ == '__main__':
     unittest.main()
