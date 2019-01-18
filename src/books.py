@@ -23,16 +23,14 @@ def search():
     if publish_date:
         try:
             publish_date = datetime.strptime(publish_date, '%Y-%m-%d')
-        except TypeError:
+        except Exception:
             abort(400, 'Bad request')
-
         books = books.filter_by(publish_date=publish_date)
-
-    
 
     books = books_schema.dump(books).data
     if len(books) <= 0:
         abort(404, 'Book not found')
+
     return books, 200
 
 
