@@ -191,6 +191,31 @@ class BookTestCase(unittest.TestCase):
         status_code = rv.status_code
         assert status_code == 400
 
+    def test_borrow_book_success(self):
+        data = {"ISBN": "9781408835005", "reservation_count": 10}
+        rv = self.app.post("/api/library/reserve",
+                           data=json.dumps(data),
+                           headers={"Content-Type": "application/json",
+                                    "Accept": "application/json"})
+        res = rv.json
+        reserv_id = res["reservation_id"]
+        data_borrow = {"reservation_id": reserv_id}
+        rv1 = self.app.put("/api/library/borrow",
+                            data=json.dumps(data_borrow),
+                            headers={"Content-Type": "application/json",
+                                    "Accept": "application/json"})
+        status_code = rv1.status_code
+        assert status_code == 200
+
+    def test_borrow_book_unsuccess(self):
+        data = {"ISBN": "9781408812335005", "reservation_count": 10}
+        rv = self.app.put("/api/library/borrow",
+                            data=json.dumps(data),
+                            headers={"Content-Type": "application/json",
+                                    "Accept": "application/json"})
+        status_code = rv.status_code
+        assert status_code == 404
+
 
 if __name__ == '__main__':
     unittest.main()
