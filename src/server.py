@@ -3,7 +3,6 @@ Main module of the server file
 """
 
 # 3rd party moudles
-import connexion
 from config import connex_app
 
 # create the application instance
