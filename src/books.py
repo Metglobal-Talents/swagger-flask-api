@@ -23,14 +23,14 @@ def search():
     if publish_date:
         try:
             publish_date = datetime.strptime(publish_date, '%Y-%m-%d')
-        except TypeError:
+        except Exception:
             abort(400, 'Bad request')
-
         books = books.filter_by(publish_date=publish_date)
 
     books = books_schema.dump(books).data
     if len(books) <= 0:
         abort(404, 'Book not found')
+
     return books, 200
 
 
@@ -95,18 +95,17 @@ def update():
 
 
 def delete():
-    if request.method == 'DELETE':
-        json_data = request.get_json(force=True)
-        if not json_data:
-            abort(400, "No Data Provided")
+    json_data = request.get_json(force=True)
+    if not json_data:
+        abort(400, "No Data Provided")
 
-        book = Book.query.filter_by(ISBN=json_data['ISBN']).first()
+    book = Book.query.filter_by(ISBN=json_data['ISBN']).first()
 
-        if not book:
-            abort(404, 'Book Not Found')
+    if not book:
+        abort(404, 'Book Not Found')
 
-        result = book_schema.dump(book).data
+    result = book_schema.dump(book).data
 
-        db.session.delete(book)
-        db.session.commit()
-        return result, 200
+    db.session.delete(book)
+    db.session.commit()
+    return result, 200
