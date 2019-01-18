@@ -171,7 +171,7 @@ paths:
           description: Bad Request for Book Remove
         404:
           description: Book Not Found
-  /library/reserve/:
+  /library/reserve:
     post:
       tags:
       - library
@@ -201,7 +201,7 @@ paths:
           description: Bad Request for Reservation
         404:
           description: Book ISBN Not Found
-  /library/borrow/:
+  /library/borrow:
     put:
       tags:
       - library
@@ -235,7 +235,7 @@ paths:
           description: Bad Request for Book Borrow
         404:
           description: Reservation Not Found
-  /library/return/:
+  /library/return:
     put:
       tags:
       - library
