@@ -116,6 +116,8 @@ class BookTestCase(unittest.TestCase):
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                 })
+    status_code = rv.status_code
+    assert status_code == 400
 
     def test_update_book(self):
         data = {"book_name": "835 Satır", "author_name": "Nazım Hikmet",
