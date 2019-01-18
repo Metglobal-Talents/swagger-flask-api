@@ -4,6 +4,7 @@ from flask_marshmallow import Marshmallow
 db = SQLAlchemy()
 ma = Marshmallow()
 
+
 class Book(db.Model):
     __tablename__ = 'books'
 
@@ -13,7 +14,7 @@ class Book(db.Model):
     genre = db.Column(db.String(50), nullable=False)
     ISBN = db.Column(db.String(13), unique=True, nullable=False)
     count = db.Column(db.Integer)
-    reservation_count = db.Column(db.Integer)
+    reservation_count = db.Column(db.Integer, default=0)
     publish_date = db.Column(db.Date)
 
 
@@ -27,15 +28,19 @@ class Reservation(db.Model):
     is_barrowed = db.Column(db.Boolean)
 
 
-class BookSchema(ma.ModelSchema):
+class BaseSchema(ma.ModelSchema):
     class Meta:
+        sqla_session = db.session
+
+
+class BookSchema(BaseSchema):
+    class Meta(BaseSchema.Meta):
         model = Book
-        sqla_session = db.session
 
 
-class ReservationSchema(ma.ModelSchema):
-    class Meta:
+class ReservationSchema(BaseSchema):
+    class Meta(BaseSchema.Meta):
         model = Reservation
-        sqla_session = db.session
+
 
 

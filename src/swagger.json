@@ -5,7 +5,7 @@
     "version" : "1.0.0",
     "title" : "Metglobal-Talents Simple Library API"
   },
-  "host" : "localhost",
+  "host" : "localhost:5000",
   "basePath" : "/api",
   "schemes" : [ "http" ],
   "consumes" : [ "application/json" ],
@@ -393,6 +393,9 @@
           "type" : "integer"
         },
         "publish_date" : {
+          "type" : "string"
+        },
+        "ISBN": {
           "type" : "string"
         }
       }
