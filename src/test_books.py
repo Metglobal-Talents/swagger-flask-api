@@ -13,6 +13,15 @@ class BookTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def create_isbn(self):
+        code = str(uuid.uuid4().hex)[:13]
+        rv = self.app.get("/api/books?ISBN=" + code)
+        status_code = rv.status_code
+        if status_code == 404:
+            return code
+        else:
+            self.create_isbn()
+
     def test_all_books(self):
         rv = self.app.get("/api/books")
         status_code = rv.status_code
@@ -73,16 +82,14 @@ class BookTestCase(unittest.TestCase):
 
 
     def test_reserve_book(self):
-        data = {"ISBN": "9781408835005", "reservation_count": 1}
+        data = {"ISBN": "9788700760356", "reservation_count": 1}
         rv = self.app.post("/api/library/reserve",
                 data=json.dumps(data),
                 headers={
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
+                        "Content-Type": "application/json"
                 })
 
         status_code = rv.status_code
-        import ipdb; ipdb.set_trace()
         assert status_code == 201
 
     def test_unsucces_reserve_book(self):
@@ -98,7 +105,7 @@ class BookTestCase(unittest.TestCase):
         assert status_code == 404
 
     def test_too_much_reservation(self):
-        data = {"ISBN": "9781408835005", "reservation_count": 100000}
+        data = {"ISBN": "9781523480500", "reservation_count": 100000}
         rv = self.app.post("/api/library/reserve",
                 data=json.dumps(data),
                 headers={
@@ -118,12 +125,13 @@ class BookTestCase(unittest.TestCase):
                         "Accept": "application/json"
                 })
         status_code = rv.status_code
-        assert status_code == 400
+        assert status_code == 404
+
 
     def test_update_book(self):
         data = {"book_name": "835 Satır", "author_name": "Nazım Hikmet",
                 "genre": "Şiir", "count": 100, "publish_date": "2000",
-                "ISBN": "string"}
+                "ISBN": "9780007203550"}
         rv = self.app.put("/api/books",
                           data=json.dumps(data),
                           headers={"Content-Type": "application/json"})
@@ -167,7 +175,7 @@ class BookTestCase(unittest.TestCase):
         assert status_code == 400
 
     def test_create_success(self):
-        data = {"ISBN": str(uuid.uuid4())[10], "book_name": "It", "author_name": "Stephen King",
+        data = {"ISBN": self.create_isbn(), "book_name": "It", "author_name": "Stephen King",
                 "genre": "Horror", "count": 100, "publish_date": "1986"}
         rv = self.app.post("/api/books", data=json.dumps(data),
                            headers={"Content-Type": "application/json"})
