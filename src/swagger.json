@@ -231,7 +231,7 @@
         }
       }
     },
-    "/library/reserve/" : {
+    "/library/reserve" : {
       "post" : {
         "tags" : [ "library" ],
         "summary" : "Creates a reservation for given book ISBN",
@@ -274,7 +274,7 @@
         }
       }
     },
-    "/library/borrow/" : {
+    "/library/borrow" : {
       "put" : {
         "tags" : [ "library" ],
         "summary" : "Books borrowed, reservation count decreased, and count decreased",
@@ -323,7 +323,7 @@
         }
       }
     },
-    "/library/return/" : {
+    "/library/return" : {
       "put" : {
         "tags" : [ "library" ],
         "summary" : "Book returned from borrow or reservation",
