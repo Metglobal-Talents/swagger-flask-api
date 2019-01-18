@@ -1,0 +1,92 @@
+[
+  {
+    "book_name": "Harry Potter and Order of the Phoenix",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "9781408835005",
+    "publish_date": "2003-01-01",
+    "count": 100,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "Harry Potter and Philisopher's Stone",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "975-08-0294-2",
+    "publish_date": "2001-01-01",
+    "count": 10,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "Harry Potter and Chamber of Secrets",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "975-08-0295-0",
+    "publish_date": "2001-01-01",
+    "count": 25,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "Harry Potter and Prisoner of Azkaban",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "975-08-0331-6",
+    "publish_date": "2001-01-01",
+    "count": 30,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "Harry Potter and Goblet of Fire",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "9750803310",
+    "publish_date": "2001-01-01",
+    "count": 5,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "Harry Potter and Half-Blood Prince",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "975-08-0995-5",
+    "publish_date": "2007-01-01",
+    "count": 40,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "Harry Potter and Deathly Hallows",
+    "author_name": "J.K. Rowling",
+    "genre": "Fantastic",
+    "ISBN": "9781523480500",
+    "publish_date": "2007-01-01",
+    "count": 60,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "The LOTR: The Fellowship of the Ring",
+    "author_name": "J.R.R. Tolkien",
+    "genre": "Fantastic",
+    "ISBN": "9788700760356",
+    "publish_date": "1954-01-01",
+    "count": 100,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "The LOTR: The Two Towers",
+    "author_name": "J.R.R. Tolkien",
+    "genre": "Fantastic",
+    "ISBN": "9780007203550",
+    "publish_date": "1954-01-01",
+    "count": 70,
+    "reservation_count": 0
+  },
+  {
+    "book_name": "The LOTR: The Return of the King",
+    "author_name": "J.R.R. Tolkien",
+    "genre": "Fantastic",
+    "ISBN": "9788324137930",
+    "publish_date": "1955-01-01",
+    "count": 80,
+    "reservation_count": 0
+  }
+]
