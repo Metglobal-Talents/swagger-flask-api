@@ -69,5 +69,55 @@ class BookTestCase(unittest.TestCase):
         status_code = rv.status_code
         assert status_code == 404
 
+    def test_reserve_book(self):
+        data = {"ISBN": "9781408835005", "reservation_count": 1}
+        rv = self.app.post("/api/library/reserve",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                })
+
+        status_code = rv.status_code
+        import ipdb; ipdb.set_trace()
+        assert status_code == 201
+
+    def test_unsucces_reserve_book(self):
+        data = {"ISBN": "9781523480501", "reservation_count": 2}
+        rv = self.app.post("/api/library/reserve",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                })
+
+        status_code = rv.status_code
+        assert status_code == 404
+
+    def test_too_much_reservation(self):
+        data = {"ISBN": "9781408835005", "reservation_count": 100000}
+        rv = self.app.post("/api/library/reserve",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                })
+
+        status_code = rv.status_code
+        assert status_code == 400
+
+    def test_reservation_isbn_not_found_in_request_data(self):
+        data = {"reservation_count": 1}
+        rv = self.app.post("/api/library/reserve",
+                data=json.dumps(data),
+                headers={
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                })
+
+        status_code = rv.status_code
+        assert status_code == 400
+
+
 if __name__ == '__main__':
     unittest.main()
