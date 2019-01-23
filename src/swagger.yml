@@ -171,13 +171,13 @@ paths:
           description: Bad Request for Book Remove
         404:
           description: Book Not Found
-  /library/reserve:
+  /books/reserve:
     post:
       tags:
-      - library
+      - books
       summary: Creates a reservation for given book ISBN
       description: Reservation for given book ISBN
-      operationId: library.reserve_book
+      operationId: books.reserve_book
       parameters:
       - in: body
         name: count
@@ -201,13 +201,13 @@ paths:
           description: Bad Request for Reservation
         404:
           description: Book ISBN Not Found
-  /library/borrow:
+  /books/borrow:
     put:
       tags:
-      - library
+      - books
       summary: Books borrowed, reservation count decreased, and count decreased
       description: Books borrowed, reservation count decreased, and count decreased
-      operationId: library.borrow_book
+      operationId: books.borrow_book
       parameters:
       - in: body
         name: reservation
@@ -235,13 +235,13 @@ paths:
           description: Bad Request for Book Borrow
         404:
           description: Reservation Not Found
-  /library/return:
+  /books/return:
     put:
       tags:
-      - library
+      - books
       summary: Book returned from borrow or reservation
       description: Book count increased for return
-      operationId: library.return_book
+      operationId: books.return_book
       parameters:
       - in: body
         name: reservation_id

@@ -231,12 +231,12 @@
         }
       }
     },
-    "/library/reserve" : {
+    "/books/reserve" : {
       "post" : {
-        "tags" : [ "library" ],
+        "tags" : [ "books" ],
         "summary" : "Creates a reservation for given book ISBN",
         "description" : "Reservation for given book ISBN",
-        "operationId" : "library.reserve_book",
+        "operationId" : "books.reserve_book",
         "parameters" : [ {
           "in" : "body",
           "name" : "count",
@@ -274,12 +274,12 @@
         }
       }
     },
-    "/library/borrow" : {
+    "/books/borrow" : {
       "put" : {
-        "tags" : [ "library" ],
+        "tags" : [ "books" ],
         "summary" : "Books borrowed, reservation count decreased, and count decreased",
         "description" : "Books borrowed, reservation count decreased, and count decreased",
-        "operationId" : "library.borrow_book",
+        "operationId" : "books.borrow_book",
         "parameters" : [ {
           "in" : "body",
           "name" : "reservation",
@@ -323,12 +323,12 @@
         }
       }
     },
-    "/library/return" : {
+    "/books/return" : {
       "put" : {
-        "tags" : [ "library" ],
+        "tags" : [ "books" ],
         "summary" : "Book returned from borrow or reservation",
         "description" : "Book count increased for return",
-        "operationId" : "library.return_book",
+        "operationId" : "books.return_book",
         "parameters" : [ {
           "in" : "body",
           "name" : "reservation_id",
