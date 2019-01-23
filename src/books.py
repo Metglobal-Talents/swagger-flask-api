@@ -183,7 +183,7 @@ def return_book():
     if reservation.is_barrowed:
         book.count += reservation.reservation_count
     else:
-        book.reservation_count -= reservation.reservation_count
+        abort(400, "Borrow is not completed, you can not return books")
     db.session.delete(reservation)
     db.session.commit()
 
