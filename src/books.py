@@ -1,5 +1,6 @@
 from flask import request, abort
-from models import Book, BookSchema, Reservation, ReservationSchema, db
+from models import Book, BookSchema, Reservation, ReservationSchema, db, \
+    BookLoadSchema
 from datetime import datetime
 import uuid
 
@@ -72,8 +73,7 @@ def update():
     request_book = request.get_json(force=True)
     if not request_book:
         abort(400, "No Input Data")
-
-    data, errors = book_schema.load(request_book)
+    data, errors = BookLoadSchema().load(request_book)
     if errors:
         abort(400, "Bad Request")
 
@@ -81,16 +81,14 @@ def update():
     if not book:
         abort(404, 'Book Not Found')
 
-    book.ISBN = data.ISBN
-    book.book_name = data.book_name if data.book_name != None else book.book_name
-    book.author_name = data.author_name \
-        if data.author_name != None else book.author_name
-    book.genre = data.genre if data.genre != None else book.genre
-    book.publish_date = data.publish_date \
-        if data.publish_date != None else book.publish_date
-    book.count = data.count if data.count != None else book.count
-    book.reservation_count = data.reservation_count \
-        if data.reservation_count != None else book.reservation_count
+    book.ISBN = data.get('ISBN')
+    book.book_name = data.get('book_name', book.book_name)
+    book.author_name = data.get('author_name', book.author_name)
+    book.genre = data.get('genre', book.genre)
+    book.publish_date = data.get('publish_date', book.publish_date)
+    book.count = data.get('count', book.count)
+    book.reservation_count = data.get('reservation_count',
+                                      book.reservation_count)
     db.session.commit()
 
     result = book_schema.dump(book).data

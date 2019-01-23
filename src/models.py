@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from marshmallow import fields
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -41,6 +42,16 @@ class BookSchema(BaseSchema):
 class ReservationSchema(BaseSchema):
     class Meta(BaseSchema.Meta):
         model = Reservation
+
+class BookLoadSchema(ma.Schema):
+    ISBN = fields.String(required=True)
+    book_name = fields.String()
+    author_name = fields.String()
+    genre = fields.String()
+    count = fields.Integer()
+    reservation_count = fields.Integer()
+    publish_date = fields.Date()
+
 
 
 
